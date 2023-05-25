@@ -154,10 +154,11 @@ if (isset($_GET["edicao"])) {
                                         <div class="form-group">
                                             <label class="small mb-1" for="telefone">Telefone</label>
                                             <input class="form-control" required name="telefone" id="telefone" value="<?php echo $telefone; ?>" type="text" placeholder="Informe o telefone" />
+
+                                            <script type="text/javascript">
+                                                $("#telefone").mask("(99) 9999-99999");
+                                            </script>
                                         </div>
-                                        <script type="text/javascript">
-                                            $("#telefone").mask("(00) # 0000-0000");
-                                        </script>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -194,6 +195,7 @@ if (isset($_GET["edicao"])) {
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
     <script src="assets/demo/datatables-demo.js"></script>
+
 
 </body>
 
