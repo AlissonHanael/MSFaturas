@@ -5,7 +5,7 @@
 				Copyright © 2023 por Alisson Hanael Zini Gaio
 			</div>
 			<div>
-				Versão 1.1.0
+				Versão 1.2.0
 			</div>
 		</div>
 	</div>
