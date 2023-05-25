@@ -7,7 +7,7 @@ if (!isset($_COOKIE['login'])) {
 }
 
 
-$id_cliente = 0;
+$id_entidade = 0;
 $razao = "";
 $nome = "";
 $insc_mun = "";
@@ -23,23 +23,23 @@ if (isset($_GET["edicao"])) {
 
 
     require_once "conexao.php";
-    $sql = "SELECT * FROM cliente WHERE id_cliente = ?";
+    $sql = "SELECT * FROM entidade WHERE id_entidade = ?";
     $stmt = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($stmt, "i", $id);
     mysqli_stmt_execute($stmt);
 
     $resultado = mysqli_stmt_get_result($stmt);
 
-    $cliente = mysqli_fetch_assoc($resultado);
+    $entidade = mysqli_fetch_assoc($resultado);
 
-    $id_cliente = $cliente['id_cliente'];
-    $razao = $cliente['razao_social'];
-    $nome = $cliente['nome_fantasia'];
-    $insc_mun = $cliente['inscricao_municipal'];
-    $insc_est = $cliente['inscricao_estadual'];
-    $endereco = $cliente['endereco'];
-    $telefone = $cliente['telefone'];
-    $cnpj = $cliente['cnpj'];
+    $id_entidade = $entidade['id_entidade'];
+    $razao = $entidade['razao_social'];
+    $nome = $entidade['nome_fantasia'];
+    $insc_mun = $entidade['inscricao_municipal'];
+    $insc_est = $entidade['inscricao_estadual'];
+    $endereco = $entidade['endereco'];
+    $telefone = $entidade['telefone'];
+    $cnpj = $entidade['cnpj'];
 }
 ?>
 
@@ -68,32 +68,26 @@ if (isset($_GET["edicao"])) {
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
-
                 <?php include_once("menu.php") ?>
-
-                <div class="sb-sidenav-footer">
-                    <div class="small">Disciplina:</div>
-                    Programação Web I
-                </div>
             </nav>
         </div>
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid">
-                    <h1 class="mt-4">Cliente</h1>
+                    <h1 class="mt-4">Entidade</h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Cliente</li>
+                        <li class="breadcrumb-item active">Entidade</li>
                     </ol>
                     <div class="card mb-4">
                         <div class="card-body">
-                            <a href="cliente-lista.php" type="button" class="btn btn-outline-primary">Lista de Clientes</a>
+                            <a href="entidade-lista.php" type="button" class="btn btn-outline-primary">Lista de Entidades</a>
                         </div>
                     </div>
 
                     <?php if (isset($_GET['sucesso'])) { ?>
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Cliente cadastrado com Sucesso!</strong>
+                            <strong>Entidade cadastrado com Sucesso!</strong>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -113,7 +107,7 @@ if (isset($_GET["edicao"])) {
 
                     <?php if (isset($_GET['atualizacao'])) { ?>
                         <div class="alert alert-info alert-dismissible fade show" role="alert">
-                            <strong> Cliente atualizado com sucesso!</strong>
+                            <strong> Entidade atualizado com sucesso!</strong>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -121,11 +115,11 @@ if (isset($_GET["edicao"])) {
                     <?php } ?>
 
                     <div class="card mb-4">
-                        <div class="card-header">Novo Cliente</div>
+                        <div class="card-header">Novo Entidade</div>
                         <div class="card-body">
-                            <form action="cadastroCliente.php" method="POST">
+                            <form action="cadastroEntidade.php" method="POST">
 
-                                <input class="form-control" name="id_cliente" id="id_cliente" value="<?php echo $id_cliente; ?>" type="hidden" />
+                                <input class="form-control" name="id_entidade" id="id_entidade" value="<?php echo $id_entidade; ?>" type="hidden" />
 
                                 <div class="form-row">
                                     <div class="col-md-6">
@@ -137,14 +131,14 @@ if (isset($_GET["edicao"])) {
                                 </div>
                                 <div class="form-group">
                                     <label class="small mb-1" for="endereco">Endereço</label>
-                                    <input class="form-control" required name="endereco" id="endereco" value="<?php echo $endereco; ?>" type="endereco" aria-describedby="emailHelp" placeholder="Cidade, Estado, CEP, Rua, Num, Complemento" />
+                                    <input class="form-control" required name="endereco" id="endereco" value="<?php echo $endereco; ?>" type="endereco" aria-describedby="emailHelp" placeholder="Cidade, Estado, Rua, Num, Complemento" />
                                 </div>
 
                                 <div class="form-row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="small mb-1" for="cnpj">CNPJ</label>
-                                            <input class="form-control" required name="cnpj" id="cnpj" value="<?php echo $cnpj; ?>" type="text" placeholder="Informe o CNPJ do cliente" />
+                                            <input class="form-control" required name="cnpj" id="cnpj" value="<?php echo $cnpj; ?>" type="text" placeholder="Informe o CNPJ do entidade" />
                                         </div>
                                         <script type="text/javascript">
                                             $("#cnpj").mask("00.000.000/0000-00");
@@ -156,13 +150,13 @@ if (isset($_GET["edicao"])) {
                                             <input class="form-control" required name="telefone" id="telefone" value="<?php echo $telefone; ?>" type="text" placeholder="Informe o telefone" />
                                         </div>
                                         <script type="text/javascript">
-                                            $("#telefone").mask("(00) # 0000-0000");
+                                            $("#telefone").mask("(00) 0 0000-0000");
                                         </script>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="small mb-1" for="razao_social">Razão Social</label>
-                                            <input class="form-control" required name="razao_social" id="razao_social" value="<?php echo $razao; ?>" type="text" placeholder="Razão Social do Cliente" />
+                                            <input class="form-control" required name="razao_social" id="razao_social" value="<?php echo $razao; ?>" type="text" placeholder="Razão Social do Entidade" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -186,7 +180,16 @@ if (isset($_GET["edicao"])) {
                     </div>
                 </div>
             </main>
-            <?php include('rodape.php') ?>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Prof. Aldo Paim</div>
+                        <div>
+                            Versão 1.0
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>

@@ -14,10 +14,49 @@ if (!isset($_COOKIE['login'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ControlFarma</title>
+    <title>MS Faturas</title>
     <link href="css/styles.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        // Load the Visualization API and the corechart package.
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawChart);
+
+        // Callback that creates and populates a data table,
+        // instantiates the pie chart, passes in the data and
+        // draws it.
+        function drawChart() {
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Topping');
+            data.addColumn('number', 'Slices');
+            data.addRows([
+                ['Mushrooms', 3],
+                ['Onions', 1],
+                ['Olives', 1],
+                ['Zucchini', 1],
+                ['Pepperoni', 2]
+            ]);
+
+            // Set chart options
+            var options = {
+                'title': 'How Much Pizza I Ate Last Night',
+                'width': 400,
+                'height': 300
+            };
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
 
 </head>
 
@@ -30,8 +69,8 @@ if (!isset($_COOKIE['login'])) {
                 <?php include_once("menu.php") ?>
 
                 <div class="sb-sidenav-footer">
-                    <div class="small">Disciplina:</div>
-                    Programação Web I
+                    <div class="small">MS Faturas</div>
+                    Gerador de Faturas
                 </div>
             </nav>
         </div>
@@ -39,16 +78,15 @@ if (!isset($_COOKIE['login'])) {
             <main>
                 <div class="container-fluid">
                     <h1 class="mt-4">Página Inicial</h1>
-
-
+                    <div id="chart_div"></div>
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Prof. Aldo Paim</div>
+                        <div class="text-muted">Madeiras do Sul Logística</div>
                         <div>
-                            Versão 1.0
+                            Versão 1.1.0
                         </div>
                     </div>
                 </div>

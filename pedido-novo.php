@@ -16,6 +16,10 @@ $sql_produto = "SELECT * FROM item";
 $resultado_produto = mysqli_query($conexao, $sql_produto);
 
 
+$sql_cliente = "SELECT * FROM entidade";
+$resultado_entidade = mysqli_query($conexao, $sql_cliente);
+
+
 $id_fatura = 0;
 $cod_cliente = 0;
 $valortotal = 0;
@@ -46,7 +50,7 @@ if (isset($_GET['edicao'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>IFPR Admin</title>
+    <title>MS Faturas</title>
     <link href="css/styles.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -105,24 +109,46 @@ if (isset($_GET['edicao'])) {
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid">
-                    <h1 class="mt-4">Pedido</h1>
+                    <h1 class="mt-4">Fatura</h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                        <li class="breadcrumb-item active">Pedido</li>
+                        <li class="breadcrumb-item active">Fatura</li>
                     </ol>
                     <div class="card mb-4">
                         <div class="card-body">
-                            <a href="pedido-lista.php" type="button" class="btn btn-outline-secondary">Lista de Pedidos</a>
+                            <a href="pedido-lista.php" type="button" class="btn btn-outline-secondary">Lista de Faturas</a>
                         </div>
                     </div>
 
                     <div id='mensagem'></div>
 
                     <div class="card mb-4">
-                        <div class="card-header"><i class="fa fa-table mr-1"></i>Novo Pedido</div>
+                        <div class="card-header"><i class="fa fa-table mr-1"></i>Nova Fatura</div>
                         <div class="card-body">
                             <form action="" method="POST" id="form-pedido">
                                 <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label class="small mb-1">Entidade</label>
+                                                <select required id="entidade" name="entidade" class="form-control select-entidade">
+                                                    <option selected disabled>Selecione...</option>
+                                                    <?php
+                                                    while ($dados = mysqli_fetch_array($resultado_entidade)) {
+
+                                                        if ($cod_entidade == $dados['id_entidade']) {
+
+                                                            $seleciona = 'selected="selected"';
+                                                        } else {
+                                                            $seleciona = '';
+                                                        }
+                                                        echo '<option value="' . $dados['id_entidade'] . '" ' . $seleciona . '>' . $dados['nome_fantasia'] . '</option>';
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <div class="form-group">
@@ -173,6 +199,13 @@ if (isset($_GET['edicao'])) {
                                         <div class="form-group">
                                             <label class="small mb-1">Valor Unitário</label>
                                             <input class="form-control preco-prod" required min="0" step=".01" name="valorUnitario" id="valorUnitario" type="number" />
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="small mb-1">Observação</label>
+                                            <input class="form-control preco-prod" name="observacao" id="observacao" type="text" />
                                         </div>
 
                                     </div>
@@ -248,11 +281,11 @@ if (isset($_GET['edicao'])) {
 
         if (isset($_GET['edicao'])) {
 
-            $sql_fatura_item = "SELECT * FROM pedidoproduto WHERE cod_pedido=" . $codigo . " ORDER BY codigo";
+            $sql_fatura_item = "SELECT * FROM item_fatura WHERE id_item_fatura=" . $codigo . " ORDER BY codigo";
 
-            $resultado_pedidoproduto = mysqli_query($conexao, $sql_pedidoproduto);
+            $resultado_fatura_item = mysqli_query($conexao, $sql_fatura_item);
 
-            while ($dados = mysqli_fetch_array($resultado_pedidoproduto)) {
+            while ($dados = mysqli_fetch_array($resultado_fatura_item)) {
         ?>
                 adicionarProduto(<?php echo $dados['cod_produto'] ?>,
                     <?php echo $dados['quantidade'] ?>,

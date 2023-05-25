@@ -87,7 +87,6 @@ $(document).ready(function () {
     let data = ano + '-' + mes + '-' + dia
 
     var vencimento = $('#vencimento').val()
-    console.log(vencimento, 'data de hoje', data)
 
     if (vencimento < data) {
       alert('O vencimento não pode ser menor que a data do documento.')
@@ -98,9 +97,11 @@ $(document).ready(function () {
 
     var codigo = $('#id_fatura').val()
     var cliente = $('#cliente').val()
+    var entidade = $('#entidade').val()
     var valortotal = $('#valortotal').val()
     var status = $('#status').val()
     var parcelas = $('#parcelas').val()
+    var observacao = $('#observacao').val()
 
     $.ajax({
       //func é uma variavel
@@ -112,10 +113,12 @@ $(document).ready(function () {
       data: {
         id_fatura: codigo,
         vencimento: vencimento,
+        entidade: entidade,
         cliente: cliente,
         valor_total: valortotal,
         status: status,
-        parcelas: parcelas
+        parcelas: parcelas,
+        observacao: observacao
       },
 
       success: function (resposta) {
@@ -139,7 +142,13 @@ $(document).ready(function () {
   })
 })
 
-function adicionarProduto(cod_produto, quantidade, valoruni, valor_total_item) {
+function adicionarProduto(
+  cod_produto,
+  quantidade,
+  valoruni,
+  valor_total_item,
+  observacao
+) {
   $.ajax({
     url:
       'cadastroPedido.php?func=addprod&id=' +

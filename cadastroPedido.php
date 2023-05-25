@@ -1,5 +1,9 @@
 <?php
 
+require __DIR__ . '/vendor/autoload.php';
+
+use Dompdf\Dompdf;
+
 if (!isset($_COOKIE['login'])) {
     header("Location:login.php");
 }
@@ -69,10 +73,12 @@ function gravapedido()
 
     $codigo = mysqli_escape_string($conexao, $_POST['id_fatura']);
 
+    $entidade = mysqli_escape_string($conexao, $_POST['entidade']);
     $cliente = mysqli_escape_string($conexao, $_POST['cliente']);
     $status = mysqli_escape_string($conexao, $_POST['status']);
     $vencimento = mysqli_escape_string($conexao, $_POST['vencimento']);
     $parcelas = mysqli_escape_string($conexao, $_POST['parcelas']);
+    $observacao = mysqli_escape_string($conexao, $_POST['observacao']);
     $valortotal = $_POST['valor_total'];
     $valortotal = str_replace(".", "", $valortotal);
     $valortotal = str_replace(",", ".", $valortotal);
@@ -82,9 +88,9 @@ function gravapedido()
         $tipos = "idi";
         $parametros = array($cliente, $valortotal, $codigo);
     } else {
-        $sql = "INSERT INTO fatura(cliente, status, vencimento, parcelas, valor_total) values (?, ?, ?, ?, ?)";
-        $tipos = "issid";
-        $parametros = array($cliente, $status, $vencimento, $parcelas, $valortotal);
+        $sql = "INSERT INTO fatura(entidade, cliente, status, vencimento, parcelas, valor_total, observacao) values (?, ?, ?, ?, ?, ?, ?)";
+        $tipos = "iissids";
+        $parametros = array($entidade, $cliente, $status, $vencimento, $parcelas, $valortotal, $observacao);
     }
     $stmt = mysqli_prepare($conexao, $sql);
 
@@ -103,10 +109,11 @@ function gravapedido()
             $novo_codigo = mysqli_insert_id($conexao);
         }
 
+        $query = '';
         if (!empty($_SESSION["cesta_prod"])) {
 
             foreach ($_SESSION["cesta_prod"] as $key => $value) {
-                $query = 'INSERT INTO item_fatura(cod_fatura, cod_item, quantidade, preco_unitario, valortotal) VALUES (' .
+                $query .= 'INSERT INTO item_fatura(cod_fatura, cod_item, quantidade, preco_unitario, valortotal) VALUES (' .
                     $novo_codigo . ',' . $value['codigo'] . ',' . $value['quantidade'] . ',' . $value['preco_unitario'] . ',' . $value['valortotal'] . ' ); ';
             }
             mysqli_multi_query($conexao, $query);
@@ -124,6 +131,7 @@ function addProdCesta()
 
 
 
+
     if (isset($codigo)) {
 
         require "conexao.php";
@@ -134,6 +142,7 @@ function addProdCesta()
 
         $id = $array['id_item'];
         $descricao = $array['descricao'];
+
 
         if (!isset($preco_unitario) || $preco_unitario == 0) {
             $preco_unitario = $array['preco_unitario'];
@@ -154,6 +163,7 @@ function addProdCesta()
             "quantidade" => $quantidade,
             "preco_unitario" => $preco_unitario,
             "valortotal" => $valorTotal
+
         );
 
         if (!empty($_SESSION["cesta_prod"]))

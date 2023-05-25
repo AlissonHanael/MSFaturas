@@ -4,8 +4,6 @@ if (!isset($_COOKIE['login'])) {
     header('Location: login.php');
 }
 
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +14,7 @@ if (!isset($_COOKIE['login'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ControlFarma</title>
+    <title>MS Faturas</title>
     <link href="css/styles.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -30,10 +28,6 @@ if (!isset($_COOKIE['login'])) {
 
                 <?php include_once("menu.php") ?>
 
-                <div class="sb-sidenav-footer">
-                    <div class="small">Disciplina:</div>
-                    Programação Web I
-                </div>
             </nav>
         </div>
         <div id="layoutSidenav_content">
@@ -101,7 +95,7 @@ if (!isset($_COOKIE['login'])) {
                     <?php } ?>
 
                     <div class="card mb-4">
-                        <div class="card-header"><i class="fas fa-table mr-1"></i>Novo Usuário</div>
+                        <div class="card-header">Novo Usuário</div>
                         <div class="card-body">
                             <form action="cadastroUsuario.php" method="POST">
 
@@ -147,16 +141,7 @@ if (!isset($_COOKIE['login'])) {
                     </div>
                 </div>
             </main>
-            <footer class="py-4 bg-light mt-auto">
-                <div class="container-fluid">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Alisson Gaio</div>
-                        <div>
-                            Versão 1.0
-                        </div>
-                    </div>
-                </div>
-            </footer>
+            <?php include_once("rodape.php"); ?>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>

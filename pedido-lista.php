@@ -6,10 +6,11 @@ if (!isset($_COOKIE['login'])) {
 
 require_once "conexao.php";
 
-$sql = 'SELECT fatura.id_fatura, fatura.cliente, cliente.nome_fantasia, fatura.valor_total ' .
+$sql = 'SELECT fatura.id_fatura, fatura.cliente, cliente.nome_fantasia AS NFC, fatura.valor_total, entidade.nome_fantasia ' .
     'FROM fatura ' .
     'INNER JOIN cliente ' .
-    'ON(cliente.id_cliente = fatura.cliente)';
+    'ON(cliente.id_cliente = fatura.cliente)' .
+    'INNER JOIN entidade on entidade.id_entidade = fatura.entidade';
 
 $resultado = mysqli_query($conexao, $sql);
 ?>
@@ -41,37 +42,41 @@ $resultado = mysqli_query($conexao, $sql);
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid">
-                    <h1 class="mt-4">Pedido</h1>
+                    <h1 class="mt-4">Faturas</h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                        <li class="breadcrumb-item active">Pedido</li>
+                        <li class="breadcrumb-item active">Fatura</li>
                     </ol>
                     <div class="card mb-4">
                         <div class="card-body">
-                            <a href="pedido-novo.php" type="button" class="btn btn-outline-secondary">+ Pedido</a>
+                            <a href="pedido-novo.php" type="button" class="btn btn-outline-secondary">+ Fatura</a>
                         </div>
                     </div>
                     <div class="card mb-4">
-                        <div class="card-header"><i class="fa fa-list-ul"></i> Lista de Pedido</div>
+                        <div class="card-header"><i class="fa fa-list-ul"></i> Lista de Faturas</div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Cód. Pedido</th>
+                                            <th>Cód. Fatura</th>
+                                            <th>Entidade</th>
                                             <th>Cód. Cliente</th>
                                             <th>Cliente</th>
                                             <th>Valor Total</th>
                                             <th>Ações</th>
+
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Cód. Pedido</th>
+                                            <th>Cód. Fatura</th>
+                                            <th>Entidade</th>
                                             <th>Cód. Cliente</th>
                                             <th>Cliente</th>
                                             <th>Valor Total</th>
                                             <th>Ações</th>
+
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -81,8 +86,9 @@ $resultado = mysqli_query($conexao, $sql);
                                         while ($dados = mysqli_fetch_array($resultado)) {
                                             echo " <tr>";
                                             echo "    <td>" . $dados['id_fatura'] . "</td>";
-                                            echo "    <td>" . $dados['cliente'] . "</td>";
                                             echo "    <td>" . $dados['nome_fantasia'] . "</td>";
+                                            echo "    <td>" . $dados['cliente'] . "</td>";
+                                            echo "    <td>" . $dados['NFC'] . "</td>";
                                             echo "    <td>" . $dados['valor_total'] . "</td>";
                                             echo "  <td>";
                                             echo "        <a href='pedido-novo.php?edicao=" . $dados['id_fatura'] . "'> ";
@@ -90,6 +96,9 @@ $resultado = mysqli_query($conexao, $sql);
                                             echo "        </a>";
                                             echo "        <a href='#'class='deleta' id=" . $dados['id_fatura'] . ">";
                                             echo "            <i class='fa fa-trash' aria-hidden='true'></i>";
+                                            echo "        </a>";
+                                            echo "        <a target='_blank' href='geraPDF.php?id=" . $dados['id_fatura'] . "'> ";
+                                            echo "            <div>Imprimir</div>";
                                             echo "        </a>";
                                             echo "    </td>";
                                             echo "</tr>";
@@ -121,7 +130,7 @@ $resultado = mysqli_query($conexao, $sql);
                     type: 'GET',
                     success: function(response) {
                         if (response == 1) {
-                            alert('Pedido deletado com sucesso!');
+                            alert('Fatura deletada com sucesso!');
                             location.reload();
                         } else {
                             alert('Código inválido!');

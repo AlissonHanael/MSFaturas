@@ -1,5 +1,5 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-    <a class="navbar-brand" href="index.php">ControlFarma</a>
+    <a class="navbar-brand" href="index.php">MS Faturas</a>
     <div class="ml-auto text-white">
 
 

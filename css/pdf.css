@@ -1,0 +1,49 @@
+*{
+  font-family: sans-serif;
+  
+}
+
+.cabecalho  img {
+  background-color: #000;
+  width: 100px; /* Ajuste a largura da imagem conforme necessário */
+  height: auto; /* Mantém a proporção da imagem */
+  margin-right: 10px; /* Adicione uma margem à direita para separar a imagem do texto */
+}
+table{
+  font-size: 0.850rem;
+  width: 100%;
+  border: none;
+}
+th{
+    width: 100%;  
+    color: #000;
+  
+}
+
+
+.table-item{
+  padding: 5px;
+   border: transparent;
+   background: #0ff;
+  }
+.table-header{
+  color: white;
+  background: #555;
+  text-transform: uppercase;
+}
+
+.entidade{
+  height: auto;
+  
+}
+.entidade td{
+  padding-bottom: 5px;
+  
+}
+
+
+.fatura{
+  margin-bottom: 10px;
+}
+
+
