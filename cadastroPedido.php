@@ -14,6 +14,8 @@ if (!isset($_SESSION)) {
 
 $func = $_GET['func'];
 
+
+
 switch ($func) {
     case 'addprod':
         addProdCesta();
@@ -58,10 +60,10 @@ function deletaPedido()
 
     $codigo = $_GET['codigo'];
 
-    $sql_produtos = 'DELETE FROM pedidoproduto WHERE cod_pedido = ' . $codigo;
+    $sql_produtos = 'DELETE FROM item_fatura WHERE cod_fatura = ' . $codigo;
     mysqli_query($conexao, $sql_produtos);
 
-    $sql_pedido = 'DELETE FROM pedido WHERE codigo = ' . $codigo;
+    $sql_pedido = 'DELETE FROM fatura WHERE id_fatura = ' . $codigo;
     mysqli_query($conexao, $sql_pedido);
 
     echo "1";
@@ -72,6 +74,8 @@ function gravapedido()
     require "conexao.php";
 
     $codigo = mysqli_escape_string($conexao, $_POST['id_fatura']);
+
+    echo "<div>".$codigo."</div>";
 
     $entidade = mysqli_escape_string($conexao, $_POST['entidade']);
     $cliente = mysqli_escape_string($conexao, $_POST['cliente']);
@@ -84,9 +88,10 @@ function gravapedido()
     $valortotal = str_replace(",", ".", $valortotal);
 
     if ($codigo > 0) {
-        $sql = "UPDATE fatura SET cliente=?,valortotal=? WHERE id_fatura=?";
-        $tipos = "idi";
-        $parametros = array($cliente, $valortotal, $codigo);
+        $sql = "UPDATE fatura SET cliente=?, valor_total=?, observacao=?,parcelas=?, vencimento=? WHERE id_fatura=?";
+        echo "<div>".$sql."</div>";
+        $tipos = "idsisi";
+        $parametros = array($cliente, $valortotal, $observacao, $parcelas, $vencimento, $codigo);
     } else {
         $sql = "INSERT INTO fatura(entidade, cliente, status, vencimento, parcelas, valor_total, observacao) values (?, ?, ?, ?, ?, ?, ?)";
         $tipos = "iissids";
@@ -102,7 +107,7 @@ function gravapedido()
         echo '<h1>' . mysqli_stmt_error($stmt) . '</h1>';
     } else {
         if ($codigo > 0) { //edicao
-            $sql = "DELETE FROM item_fatura WHERE fatura = $codigo";
+            $sql = "DELETE FROM item_fatura WHERE cod_fatura = $codigo";
             mysqli_query($conexao, $sql);
             $novo_codigo = $codigo;
         } else {

@@ -98,7 +98,7 @@ $resultado = mysqli_query($conexao, $sql);
                                             echo "            <i class='fa fa-trash' aria-hidden='true'></i>";
                                             echo "        </a>";
                                             echo "        <a target='_blank' href='geraPDF.php?id=" . $dados['id_fatura'] . "'> ";
-                                            echo "            <div>Imprimir</div>";
+                                            echo "            <i class='fa fa-print' aria-hidden='true'></i>";
                                             echo "        </a>";
                                             echo "    </td>";
                                             echo "</tr>";

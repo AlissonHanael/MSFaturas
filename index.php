@@ -204,12 +204,7 @@ while ($row = mysqli_fetch_assoc($resTotalCliente)) {
             </main>
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Madeiras do Sul Logística</div>
-                        <div>
-                            Versão 1.1.0
-                        </div>
-                    </div>
+                <?php include_once("rodape.php"); ?>
                 </div>
             </footer>
         </div>

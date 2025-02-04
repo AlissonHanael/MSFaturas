@@ -16,29 +16,35 @@ $sql_produto = "SELECT * FROM item";
 $resultado_produto = mysqli_query($conexao, $sql_produto);
 
 
-$sql_cliente = "SELECT * FROM entidade";
-$resultado_entidade = mysqli_query($conexao, $sql_cliente);
+$sql_entidade = "SELECT * FROM entidade";
+$resultado_entidade = mysqli_query($conexao, $sql_entidade);
 
 
 $id_fatura = 0;
 $cod_cliente = 0;
+$cod_entidade = 0;
 $valortotal = 0;
-/*
+
 if (isset($_GET['edicao'])) {
 
     $id = $_GET['edicao'];
 
-    $sql = "SELECT * FROM pedido WHERE codigo = ?";
+    echo $id;
+    $sql = "SELECT * FROM fatura WHERE id_fatura = ?";
     $stmt = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($stmt, "i", $id);
     mysqli_stmt_execute($stmt);
     $resultado = mysqli_stmt_get_result($stmt);
     $pedido = mysqli_fetch_assoc($resultado);
-    $codigo = $pedido['codigo'];
-    $cod_cliente = $pedido['cod_cliente'];
-    $valortotal = $pedido['valortotal'];
+    $id_fatura = $pedido['id_fatura'];
+    $cod_cliente = $pedido['cliente'];
+    $cod_entidade = $pedido['entidade'];
+    $valortotal = $pedido['valor_total'];
+
+    //echo nl2br("$pedido['observacao']", FALSE);
+    
 }
-*/
+
 ?>
 
 <!DOCTYPE html>
@@ -135,6 +141,7 @@ if (isset($_GET['edicao'])) {
                                                     <option selected disabled>Selecione...</option>
                                                     <?php
                                                     while ($dados = mysqli_fetch_array($resultado_entidade)) {
+                                                        echo "<div>" . $dados['id_entidade'] . "</div>";
 
                                                         if ($cod_entidade == $dados['id_entidade']) {
 
@@ -205,20 +212,19 @@ if (isset($_GET['edicao'])) {
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="small mb-1">Observação</label>
-                                            <input class="form-control preco-prod" name="observacao" id="observacao" type="text" />
+                                            <textarea class="form-control preco-prod" name="observacao" id="observacao"><?php echo isset($pedido['observacao']) ? str_replace("\\n", "\n", htmlspecialchars($pedido['observacao'])) : ''; ?></textarea>
                                         </div>
-
-                                    </div>
+                                    </div>  
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="small mb-1">Vencimento</label>
-                                            <input class="form-control preco-prod" required name="vencimento" id="vencimento" type="date" />
+                                            <input class="form-control preco-prod" required name="vencimento" id="vencimento" type="date" value="<?php echo isset($pedido['vencimento']) ? $pedido['vencimento'] : ''; ?>" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="small mb-1">Parcelas</label>
-                                            <input class="form-control preco-prod" required name="parcelas" id="parcelas" type="number" min="1" step="1" />
+                                            <input class="form-control preco-prod" required name="parcelas" id="parcelas" type="number" min="1" step="1" value="<?php echo isset($pedido['parcelas']) ? $pedido['parcelas'] : ''; ?>"/>
                                         </div>
                                     </div>
                                     <div class="col-1">
@@ -278,19 +284,15 @@ if (isset($_GET['edicao'])) {
     <script src="js/pedido.js"></script>
     <script type="text/javascript">
         <?php
-
         if (isset($_GET['edicao'])) {
-
-            $sql_fatura_item = "SELECT * FROM item_fatura WHERE id_item_fatura=" . $codigo . " ORDER BY codigo";
-
+            $sql_fatura_item = "SELECT * FROM item_fatura WHERE cod_fatura=" . $id_fatura . "";
             $resultado_fatura_item = mysqli_query($conexao, $sql_fatura_item);
-
             while ($dados = mysqli_fetch_array($resultado_fatura_item)) {
         ?>
-                adicionarProduto(<?php echo $dados['cod_produto'] ?>,
+                adicionarProduto(<?php echo $dados['cod_item'] ?>,
                     <?php echo $dados['quantidade'] ?>,
                     <?php echo $dados['preco_unitario'] ?>,
-                    <?php echo $dados['valor_total'] ?>)
+                    <?php echo $dados['valortotal'] ?>)
         <?php
             }
         }

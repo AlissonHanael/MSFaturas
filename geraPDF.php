@@ -37,7 +37,7 @@ while ($dados = mysqli_fetch_array($resfatura)) {
                       <tr>
                         <th style='justify-content: start; width: 100px;'>  
                         <header class='cabecalho'>
-                          <img src='http://localhost/MSFaturas/assets/img/mslog_logo.jpg'>
+                          <img src='http://localhost/MSFaturas/assets/img/zit.jpg'>
                         </header>
                         </th>
                         <th style='background: #FFF; text-align: right;'>" . $dados['entRaz'] . "<p style='font-size: 0.725rem;'>CNPJ: " . $dados['entCNPJ'] . " <br/>Inscrição Estadual: " . $dados['entInsEst'] . " <br/>Inscrição Municipal : " . $dados['entInsMun'] . "<br/>Endereco: " . $dados['entEnd'] . "<br/>Telefone: " . $dados['entTel'] . " </th>
@@ -116,7 +116,7 @@ while ($dados = mysqli_fetch_array($resfatura)) {
                         </tr>
                         <tr>
                           <td colspan=5>
-                          Observações: " . $obs . "
+                          Observações: " . nl2br(str_replace("\\n", "\n", htmlspecialchars($obs)),TRUE). "
                           </td>
                         </tr>
                         ";
