@@ -14,8 +14,6 @@ if (!isset($_SESSION)) {
 
 $func = $_GET['func'];
 
-
-
 switch ($func) {
     case 'addprod':
         addProdCesta();
@@ -66,7 +64,6 @@ function deletaPedido()
     $sql_pedido = 'DELETE FROM fatura WHERE id_fatura = ' . $codigo;
     mysqli_query($conexao, $sql_pedido);
 
-    echo "1";
 }
 
 function gravapedido()
@@ -74,8 +71,6 @@ function gravapedido()
     require "conexao.php";
 
     $codigo = mysqli_escape_string($conexao, $_POST['id_fatura']);
-
-    echo "<div>".$codigo."</div>";
 
     $entidade = mysqli_escape_string($conexao, $_POST['entidade']);
     $cliente = mysqli_escape_string($conexao, $_POST['cliente']);
@@ -134,9 +129,6 @@ function addProdCesta()
     $quantidade = $_GET['quantidade'];
     $preco_unitario = $_GET['valoruni'];
 
-
-
-
     if (isset($codigo)) {
 
         require "conexao.php";
@@ -178,20 +170,4 @@ function addProdCesta()
 
         echo json_encode($retorno_array);
     }
-}
-//ihyx fpxa qrav fori
-
-function enviaEmail() {
-    echo "chegou aqui";
-    
-    $to      = 'alissonhanael@gmail.com';
-    $subject = 'the subject';
-    $message = 'hello';
-    $headers = array(
-        'From' => 'alissonhanael@gmail.com',
-        'X-Mailer' => 'PHP/' . phpversion()
-    );
-
-    mail($to, $subject, $message, $headers);
-
 }

@@ -25,11 +25,11 @@ if (isset($_POST['btn_cadastrar'])) {
 
 
 	if ($id_cliente > 0) {
-		$sql = "UPDATE cliente SET email=?,nome_fantasia=?, razao_social=?, inscricao_municipal=?, inscricao_estadual=?, endereco=?, telefone=?, cnpj=? WHERE id_cliente=?";
+		$sql = "UPDATE cliente SET email=?, nome_fantasia=?, razao_social=?, inscricao_municipal=?, inscricao_estadual=?, endereco=?, telefone=?, cnpj=? WHERE id_cliente=?";
 		$tipos = "ssssssssi";
 		$parametros = array($email, $nome, $razao, $insc_mun, $insc_est, $endereco, $telefone, $cnpj, $id_cliente);
 	} else {
-		$sql = "INSERT INTO cliente(email,nome_fantasia, razao_social, inscricao_municipal, inscricao_estadual, endereco, telefone, cnpj) VALUES(?, ?, ?, ?, ?, ?, ?)";
+		$sql = "INSERT INTO cliente(email, nome_fantasia, razao_social, inscricao_municipal, inscricao_estadual, endereco, telefone, cnpj) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 		$tipos = "ssssssss";
 		$parametros = array($email, $nome, $razao, $insc_mun, $insc_est, $endereco, $telefone, $cnpj);
 	}

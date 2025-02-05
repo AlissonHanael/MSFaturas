@@ -8,7 +8,7 @@ require "conexao.php";
 
 $id_fatura = $_GET['id'];
 
-$sql = "SELECT T1.id_fatura, T2.cnpj AS cliCNPJ, T2.email, T2.razao_social
+$sql = "SELECT T1.id_fatura, T2.cnpj AS cliCNPJ, T2.email, T2.nome_fantasia
 FROM fatura T1
 INNER JOIN cliente T2 ON T2.id_cliente = T1.cliente 
 INNER JOIN entidade T3 ON T3.id_entidade = T1.entidade 
@@ -22,7 +22,7 @@ echo $resfatura['id_fatura'];
 
 function enviaEmail($resfatura) {
 
-    $assunto = "Faturamento_#".$resfatura['id_fatura']."_".$resfatura['razao_social'];
+    $assunto = "Faturamento_#".$resfatura['id_fatura']."_".$resfatura['nome_fantasia'];
     
     if ($resfatura['email'] == null || $resfatura['email'] == '') {
         echo "Cliente não possui e-mail cadastrado.";
