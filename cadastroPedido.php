@@ -179,3 +179,19 @@ function addProdCesta()
         echo json_encode($retorno_array);
     }
 }
+//ihyx fpxa qrav fori
+
+function enviaEmail() {
+    echo "chegou aqui";
+    
+    $to      = 'alissonhanael@gmail.com';
+    $subject = 'the subject';
+    $message = 'hello';
+    $headers = array(
+        'From' => 'alissonhanael@gmail.com',
+        'X-Mailer' => 'PHP/' . phpversion()
+    );
+
+    mail($to, $subject, $message, $headers);
+
+}

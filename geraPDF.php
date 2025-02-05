@@ -1,4 +1,7 @@
 <?php
+if (!isset($_COOKIE['login'])) {
+  header("Location:login.php");
+}
 require 'conexao.php';
 require __DIR__ . '/vendor/autoload.php';
 
@@ -24,6 +27,7 @@ $resfatura = mysqli_query($conexao, $sql);
 
 
 while ($dados = mysqli_fetch_array($resfatura)) {
+  $fileName = "Fatura_" . $id_fatura ."_". $dados['razao_social']. ".pdf";
   $vencimento = date('d/m/Y', strtotime($dados['vencimento']));
   $doc_date = date('d/m/Y', strtotime($dados['doc_date']));
   $conteudo_pdf = "<!DOCTYPE html>";
@@ -31,6 +35,7 @@ while ($dados = mysqli_fetch_array($resfatura)) {
   $conteudo_pdf .= "<head>";
   $conteudo_pdf .= "<meta charset='UTF-8'>";
   $conteudo_pdf .= "<link rel='stylesheet' href='http://localhost/MSFaturas/css/pdf.css'>";
+  $conteudo_pdf .= "<title>".$fileName."</title>";
   $conteudo_pdf .= "</head>";
   $conteudo_pdf .= "<body class='corpo'>
                     <table>
@@ -142,10 +147,14 @@ $options = [
 ];
 
 // Renderizar o HTML como PDF
-$dompdf->render('Fatura_' . $id_fatura . '.pdf', $options);
+//$dompdf->stream('Fatura_' . $id_fatura . '.pdf', ['Attachment' => false]);
+
+$dompdf->render();
 
 // Gerar o PDF
-//$dompdf->stream();
+$fileName = "Fatura_" . $id_fatura . ".pdf";
+
+$dompdf->stream($fileName, ['Attachment' => false]);
 
 $pdfContent = $dompdf->output();
 

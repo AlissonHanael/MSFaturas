@@ -15,7 +15,7 @@ $insc_est = "";
 $endereco = "";
 $telefone = "";
 $cnpj = "";
-
+$email = "";
 
 if (isset($_GET["edicao"])) {
 
@@ -40,6 +40,7 @@ if (isset($_GET["edicao"])) {
     $endereco = $cliente['endereco'];
     $telefone = $cliente['telefone'];
     $cnpj = $cliente['cnpj'];
+    $email = $cliente['email'];
 }
 ?>
 
@@ -158,6 +159,12 @@ if (isset($_GET["edicao"])) {
                                             <script type="text/javascript">
                                                 $("#telefone").mask("(99) 9999-99999");
                                             </script>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="small mb-1" for="email">Email</label>
+                                            <input class="form-control" name="email" id="email" value="<?php echo $email; ?>" type="text" placeholder="Informe o email" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">

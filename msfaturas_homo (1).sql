@@ -35,7 +35,8 @@ CREATE TABLE `cliente` (
   `telefone` varchar(17) NOT NULL,
   `inscricao_municipal` varchar(11) DEFAULT NULL,
   `inscricao_estadual` varchar(9) DEFAULT NULL,
-  `endereco` text NOT NULL
+  `endereco` text NOT NULL,
+  `email` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -118,7 +119,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`user_id`, `username`, `email`, `password`) VALUES
-(1, 'admin', 'sistemas@ativusgestao.com.br', 'eaeac56c1cc44beff20ec6ebe843d0e7');
+(1, 'admin', 'sysadmin@zaioitsolutions.com', 'e10adc3949ba59abbe56e057f20f883e');
 
 --
 -- Índices para tabelas despejadas

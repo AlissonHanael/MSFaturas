@@ -21,16 +21,17 @@ if (isset($_POST['btn_cadastrar'])) {
 	$endereco = mysqli_escape_string($conexao, $_POST['endereco']);
 	$telefone = mysqli_escape_string($conexao, $_POST['telefone']);
 	$cnpj = mysqli_escape_string($conexao, $_POST['cnpj']);
+	$email = mysqli_escape_string($conexao, $_POST['email']);
 
 
 	if ($id_cliente > 0) {
-		$sql = "UPDATE cliente SET nome_fantasia=?, razao_social=?, inscricao_municipal=?, inscricao_estadual=?, endereco=?, telefone=?, cnpj=? WHERE id_cliente=?";
-		$tipos = "sssssssi";
-		$parametros = array($nome, $razao, $insc_mun, $insc_est, $endereco, $telefone, $cnpj, $id_cliente);
+		$sql = "UPDATE cliente SET email=?,nome_fantasia=?, razao_social=?, inscricao_municipal=?, inscricao_estadual=?, endereco=?, telefone=?, cnpj=? WHERE id_cliente=?";
+		$tipos = "ssssssssi";
+		$parametros = array($email, $nome, $razao, $insc_mun, $insc_est, $endereco, $telefone, $cnpj, $id_cliente);
 	} else {
-		$sql = "INSERT INTO cliente(nome_fantasia, razao_social, inscricao_municipal, inscricao_estadual, endereco, telefone, cnpj) VALUES(?, ?, ?, ?, ?, ?, ?)";
-		$tipos = "sssssss";
-		$parametros = array($nome, $razao, $insc_mun, $insc_est, $endereco, $telefone, $cnpj);
+		$sql = "INSERT INTO cliente(email,nome_fantasia, razao_social, inscricao_municipal, inscricao_estadual, endereco, telefone, cnpj) VALUES(?, ?, ?, ?, ?, ?, ?)";
+		$tipos = "ssssssss";
+		$parametros = array($email, $nome, $razao, $insc_mun, $insc_est, $endereco, $telefone, $cnpj);
 	}
 	$stmt = mysqli_prepare($conexao, $sql);
 

@@ -100,6 +100,9 @@ $resultado = mysqli_query($conexao, $sql);
                                             echo "        <a target='_blank' href='geraPDF.php?id=" . $dados['id_fatura'] . "'> ";
                                             echo "            <i class='fa fa-print' aria-hidden='true'></i>";
                                             echo "        </a>";
+                                            echo "        <a href='enviaEmail.php?id=" . $dados['id_fatura'] . "'> ";
+                                            echo "            <i class='fa fa-envelope' aria-hidden='true'></i>";
+                                            echo "        </a>";
                                             echo "    </td>";
                                             echo "</tr>";
                                         }
