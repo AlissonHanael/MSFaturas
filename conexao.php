@@ -3,7 +3,7 @@
 $servidor = "localhost";
 $usuario = "root";
 $senha = "";
-$nome_banco = "test";
+$nome_banco = "msfaturas";
 
 $conexao = mysqli_connect($servidor, $usuario, $senha, $nome_banco);
 mysqli_set_charset($conexao, "utf8");

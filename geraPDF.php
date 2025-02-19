@@ -150,10 +150,6 @@ $options = [
 //$dompdf->stream('Fatura_' . $id_fatura . '.pdf', ['Attachment' => false]);
 
 $dompdf->render();
-
-// Gerar o PDF
-$fileName = "Fatura_" . $id_fatura . ".pdf";
-
 $dompdf->stream($fileName, ['Attachment' => false]);
 
 $pdfContent = $dompdf->output();

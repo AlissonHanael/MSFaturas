@@ -18,44 +18,54 @@ WHERE id_fatura = $id_fatura";
 $resfatura = mysqli_query($conexao, $sql);
 $resfatura = mysqli_fetch_array($resfatura);
 
-echo $resfatura['id_fatura'];
+function imageToBase64($path) {
+    $type = pathinfo($path, PATHINFO_EXTENSION);
+    $data = file_get_contents($path);
+    return 'data:image/' . $type . ';base64,' . base64_encode($data);
+}
+
+
 
 function enviaEmail($resfatura) {
 
     $assunto = "Faturamento_#".$resfatura['id_fatura']."_".$resfatura['nome_fantasia'];
+
+    $getEmailTemplate = './assets/template/emailTemplate.html';
+    
+    //$logoBase64 = imageToBase64('./assets/img/assEmail.png');
+
+    /*if (!file_exists($getEmailTemplate)) {
+        echo json_encode(["success" => false, "message" => "Template de e-mail não encontrado."]);
+        return;
+    }*/
     
     if ($resfatura['email'] == null || $resfatura['email'] == '') {
-        echo "Cliente não possui e-mail cadastrado.";
+        echo json_encode(["success" => false, "message" => "Cliente Não possui email cadastrado."]);
         return;
     }else {
         $to      = $resfatura['email']; // Altere para o e-mail de destino
         $subject = $assunto;
-        
-        $message = '
-        <html>
-        <head>
-            <title>Teste de E-mail</title>
-        </head>
-        <body>
-            <h2 style="color: blue;">Olá!</h2>
-            <p>Este é um <b>teste</b> de envio de e-mail com <i>HTML</i> no PHP.</p>
-            <p><a href="https://www.exemplo.com">Clique aqui</a> para acessar um site.</p>
-        </body>
-        </html>';
-        
+
+        $message = file_get_contents($getEmailTemplate);
+
+        // Substitui variáveis dinâmicas no template, se necessário
+        $message = str_replace("{{nome}}", $resfatura['nome_fantasia'], $message);
+        $message = str_replace("{{id_fatura}}", $resfatura['id_fatura'], $message);        
+        //$message = str_replace("{{logo}}", $logoBase64, $message);
+            
         $headers = "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-        $headers .= "From: seuemail@gmail.com\r\n";
-        $headers .= "Reply-To: seuemail@gmail.com\r\n";
+        $headers .= "From: zaioitsolutions@gmail.com\r\n";
+        $headers .= "Reply-To: zaioitsolutions@gmail.com\r\n";
         $headers .= "X-Mailer: PHP/" . phpversion();
     
         if (mail($to, $subject, $message, $headers)) {
-            echo "E-mail enviado com sucesso!";
+            echo json_encode(["success" => true, "message" => "E-mail enviado com sucesso!"]);
         } else {
-            echo "Falha ao enviar o e-mail.";
+            echo json_encode(["success" => false, "message" => "Falha ao enviar o e-mail."]);
         }
     }
-
+//https://drive.google.com/thumbnail?id=1dHem3jsY-brXGmI_nFEbsp6l8PJ4l6Zb&sz=1000
    
 }
 
